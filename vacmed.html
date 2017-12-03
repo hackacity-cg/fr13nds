@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+      html {
+        background: url(terminal.png) no-repeat center center;
+        background-size: 1600px;
+        background-attachment: fixed;
+        background-position: center center;
+      }
+      .thescreen {
+        width: 800px;
+        height: 600px;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      h1 {
+        font-weight: bold;
+      }
+      .btn-huge {
+        line-height: 5.333333;
+        font-size: 28px;
+      }
+      .consulta > input{
+        height: 50px;
+        font-size: 24px;
+      }
+      .consulta > .input-group-btn > .btn {
+        height: 50px;
+        width: 50px;
+        font-size: 20px;
+      }
+      #list {
+        font-size: 18px;
+        border-collapse: collapse;
+      }
+      #list td {
+        vertical-align: middle;
+        padding-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="thescreen">
+      <div class="row text-center">
+        <img src="logo.png" style="position: absolute; left: 0; height: 100px; top: 0"/>
+        <h1>VACINAS/MEDICAMENTOS</h1>
+        <a href='totem.html' class="btn btn-primary btn-md btn-block" style="position: absolute; right: 0; width: 100px; top: 0; margin-top: 23px;">Voltar</a>
+      </div>
+      <br /><hr /><br />
+      <div class="row">
+        <div class="col-md-6">
+            <a href="vacinas.html" class="btn btn-primary btn-lg btn-block btn-huge">VACINAS LOCAIS</a>
+        </div>
+        <div class="col-md-6">
+            <a href="medicamentos.html" class="btn btn-primary btn-lg btn-block btn-huge">MEDICAMENTOS</a>
+        </div>
+      </div>
+
+      <br /><hr />
+
+      <center><img src="vacina.jpg" height=180 /></center>
+    </div>
+
+    <script>
+
+      var accent_map = {
+        'á':'a', 'é':'e', 'í':'i','ó':'o','ú':'u'
+      };
+      function accent_fold (s) {
+        if (!s) { return ''; }
+        var ret = '';
+        for (var i = 0; i < s.length; i++) {
+          ret += accent_map[s.charAt(i)] || s.charAt(i);
+        }
+        return ret;
+      };
+
+      // :icontains -- case-insensitive, accented-folded :contains
+      $.extend($.expr[":"], {
+        "icontains": function (elem, i, match, array) {
+          return accent_fold((elem.textContent || elem.innerText || "").toLowerCase()).indexOf(accent_fold((match[3] || "").toLowerCase())) >= 0;
+        }
+      });
+
+      $(document).ready(function () {
+
+        $("#consulta_term").on('keyup', function () {
+          if (this.value.length < 1) {
+            $("#list tr").css("display", "");
+          } else {
+            $("#list tbody tr:not(:icontains('"+this.value+"'))").css("display", "none");
+            $("#list tbody tr:icontains('"+this.value+"')").css("display", "");
+          }
+        });
+
+      });
+    </script>
+  </body>
+</html>
